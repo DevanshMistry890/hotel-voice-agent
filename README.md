@@ -8,7 +8,7 @@
 
 > **[🔴 Watch Demo Video (YouTube)](https://youtu.be/BM4hye_zhOU?si=dY2A7_J3UUR85XTq)** > *See the agent handle booking logic, context switching, and CRM logging in real-time.*
 
-> **[✨ Experience the High-Fidelity Version](https://youtube.com/shorts/-4hZ3AeqgKk)** > *Demo utilizing ElevenLabs for ultra-realistic voice synthesis.*
+> **[✨ Experience the High-Fidelity Version](https://youtube.com/shorts/-4hZ3AeqgKk)** > *Demo utilizing ElevenLabs Agents for ultra-realistic voice synthesis.*
 
 ---
 
@@ -21,11 +21,11 @@
 
 ## 📖 Overview
 
-**Gemini Voice RAG Agent** is a production-grade voice interface designed to solve the "latency problem" in conversational AI. 
+**Hotel Voice RAG Agent** is an enterprise-grade voice orchestrator(conversational AI) designed to reduce operational overhead by delivering 24/7 Tier-1 support, seamlessly blending generative conversation with deterministic business logic for secure room reservations. 
 
-Unlike standard chatbots, this system acts as an **Intelligent Orchestrator**. It dynamically routes user intent between deterministic **Tools** (Availability Calendar), probabilistic **Generative AI** (Gemini 2.0), and a **Local Knowledge Base** (RAG via ChromaDB).
+Unlike standard chatbots, this system acts as an **Intelligent Orchestrator**. It dynamically routes user intent between deterministic **Tools** (Availability Calendar), probabilistic **Generative AI** (Gemini 2.5 Flash), and a **Local Knowledge Base** (RAG via ChromaDB).
 
-The architecture prioritizes **speed and reliability**, achieving sub-second voice-to-voice latency by leveraging `gemini-2.0-flash-lite` for inference and `EdgeTTS` for synthesis. It features an **Event-Driven CRM Pipeline** that asynchronously logs call outcomes to Google Sheets without blocking the voice thread.
+The architecture prioritizes **speed and reliability**, achieving sub-second voice-to-voice latency by leveraging `gemini-2.5-flash-lite` for inference and `EdgeTTS` for synthesis. It features an **Event-Driven CRM Pipeline** that asynchronously logs call outcomes to Google Sheets without blocking the voice thread.
 
 ### 🚀 Key Capabilities
 * **Hybrid Orchestration:** Seamlessly switches context between general chat, specific policy retrieval (RAG), and logic-based booking tools.
@@ -78,13 +78,13 @@ graph TD
 
 ## ⚡ Performance & Engineering Decisions
 
-1. **Ingestion vs. Inference:** * The Knowledge Base is built via an offline ETL pipeline (`ingest.py`), separating heavy embedding operations from the runtime (`main.py`). This ensures **zero cold-start latency** for the agent.
-2. **Blocking vs. Non-Blocking:** * Voice synthesis is **streaming** (non-blocking) for perceived speed.
+1. **Ingestion vs. Inference:**  The Knowledge Base is built via an offline ETL pipeline (`ingest.py`), separating heavy embedding operations from the runtime (`main.py`). This ensures **zero cold-start latency** for the agent.
+2. **Blocking vs. Non-Blocking:**  Voice synthesis is **streaming** (non-blocking) for perceived speed.
 * CRM Logging is **blocking** (synchronous) at the end of the call to guarantee data integrity before the session closes.
 
 
-3. **Prompt Engineering:** * System prompts utilize **Chain-of-Thought** (CoT) instructions to force the model to summarize RAG context into "speakable" 2-sentence answers, avoiding the "Robot Reading a PDF" problem.
-
+3. **Prompt Engineering:**  System prompts utilize **Chain-of-Thought** (CoT) instructions to force the model to summarize RAG context into "speakable" 2-sentence answers, avoiding the "Robot Reading a PDF" problem.
+4. **Adaptive Silence Detection (Debouncing)** The client utilizes a Debounced Silence Strategy to distinguish natural thinking pauses from completion, ensuring the agent prioritizes conversational completeness and never cuts the user off mid-sentence. 
 ---
 
 ## 📦 Installation & Setup
