@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+google-generativeai
+edge-tts
+gspread
+oauth2client
+chromadb
+requests
+pydantic
