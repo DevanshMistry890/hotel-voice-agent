@@ -44,7 +44,7 @@ This project demonstrates a modern **AI Engineering** stack, moving beyond simpl
 | :--- | :--- | :--- |
 | **Frontend** | **Next.js 14 + Tailwind** | Real-time UI state management & Audio Context handling. |
 | **Backend API** | **FastAPI (Python)** | Async orchestration layer & WebSocket management. |
-| **LLM Engine** | **Gemini 2.0 Flash Lite** | High-throughput, low-latency reasoning engine. |
+| **LLM Engine** | **Gemini 2.5 Flash Lite** | High-throughput, low-latency reasoning engine. |
 | **Vector DB** | **ChromaDB** | Local, persistent storage for Retrieval Augmented Generation. |
 | **Voice Ops** | **EdgeTTS / WebSpeech API** | Hybrid voice stack for zero-cost latency optimization. |
 | **Data Ops** | **Google Sheets API** | Synchronous CRM logging & structured data extraction. |
@@ -56,7 +56,7 @@ graph TD
     A[User Voice] -->|WebSpeech API| B(Next.js Frontend)
     B -->|Async POST| C{FastAPI Orchestrator}
     
-    C -->|Intent Detection| D[Router]
+    C -->|Intent Detection| D{Router}
     
     D -->|'Accessibility'| E[(ChromaDB RAG)]
     D -->|'Date Check'| F[Python Tools]
@@ -79,7 +79,8 @@ graph TD
 ## ⚡ Performance & Engineering Decisions
 
 1. **Ingestion vs. Inference:**  The Knowledge Base is built via an offline ETL pipeline (`ingest.py`), separating heavy embedding operations from the runtime (`main.py`). This ensures **zero cold-start latency** for the agent.
-2. **Blocking vs. Non-Blocking:**  Voice synthesis is **streaming** (non-blocking) for perceived speed.
+2. **Blocking vs. Non-Blocking:**  
+* Voice synthesis is **streaming** (non-blocking) for perceived speed.
 * CRM Logging is **blocking** (synchronous) at the end of the call to guarantee data integrity before the session closes.
 
 
